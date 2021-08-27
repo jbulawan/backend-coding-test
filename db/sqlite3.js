@@ -16,7 +16,7 @@ module.exports = {
 				/* Build Schemas  */
 				let schemas = fs.readdirSync('./db/schemas');
 
-				for(i= 0; i < schemas.length; i++) {
+				for(let i= 0; i < schemas.length; i++) {
 					console.log(`Building Schema: ${schemas[i].split('.')[0].toUpperCase()}`)
 					let _schema = require(`${process.cwd()}/db/schemas/${schemas[i]}`);
 					await db.run(_schema)

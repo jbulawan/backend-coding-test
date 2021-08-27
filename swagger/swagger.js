@@ -7,11 +7,10 @@ const { headers, responses, consumes, produces } = require('../swagger/defaults'
 
 const Swagger = {
 	generateDocs: (paths) => {
-		let appName = process.env.APP_NAME || '[App]';
 		let newPaths = {};
 
 		for(var path in paths) {
-			paths[path].forEach((endpoint)=>{
+			paths[path].forEach((endpoint) => {
 				let tmp = {
 					tags: [],
 					summary: endpoint.description || '',

@@ -1,5 +1,5 @@
 /* Generic Headers and Responses*/
-module.exports  = {
+module.exports = {
 	headers: [
 		// {
 		// 	name: "x-client-id",
@@ -19,7 +19,7 @@ module.exports  = {
 	responses: {
 		"200": {
 			"description": "Successful Response",
-	        "type": "object",
+			"type": "object",
 			"schema": {
 				"$ref": "#/definitions/Success"
 			}

@@ -7,7 +7,6 @@ const swaggerUi = require('swagger-ui-express');
 const Swagger = require(process.cwd()+'/swagger/swagger');
 
 const TAG = '[ROUTER]';
-const path = require('path');
 
 module.exports = {
 	initialize: (app) => {
@@ -27,7 +26,7 @@ module.exports = {
 
 				/* Swagger - Api Docs */
 				for (var key in paths) {
-					paths[key].forEach((endpoint, index)=> {
+					paths[key].forEach((endpoint, index) => {
 						paths[key][index]['path'] = formatBasePath(paths[key][index]['path']);
 					});
 				}
@@ -37,19 +36,19 @@ module.exports = {
 					customCss: '.swagger-ui .topbar { display: none }'
 				}));
 				
-				app.get('/swagger', (req,res,next)=> {
+				app.get('/swagger', (req, res) => {
 					res.status(200).json(swaggerDocument);
 				});
 
 				/* Handle non existing endpoints */
-				app.use('*', (req, res, next) => {
+				app.use('*', (req, res) => {
 					res.error('Endpoint not found', 'Not Found', 404);
 				});
 
 				resolve(app)
 
 			} catch(e) {
-				throw (e)
+				reject(e)
 			}
 
 		});
@@ -62,19 +61,16 @@ const registerRoute = (app, router, module) => {
 	let list = [];
 	try {
 		router.endpoints.forEach((endpoint) => {
-			try {
-				app[endpoint.method.toLowerCase()](basePath+endpoint.path, endpoint.middlewares, endpoint.handler);
+			app[endpoint.method.toLowerCase()](basePath+endpoint.path, endpoint.middlewares, endpoint.handler);
 				
-				if(endpoint.path === '/')
-					endpoint.path = '';
-				endpoint.handler = '';
-				endpoint.tags = router.tags;
-				/* Replace with Winston Later */
-				console.log(`${TAG}[${module.toUpperCase()}] Endpoint registered - ${endpoint.method.toUpperCase()} ${basePath+endpoint.path}`)
-				list.push(endpoint);
-			} catch (e) {
-				throw e
-			}
+			if(endpoint.path === '/')
+				endpoint.path = '';
+			
+			endpoint.handler = '';
+			endpoint.tags = router.tags;
+			/* Replace with Winston Later */
+			console.log(`${TAG}[${module.toUpperCase()}] Endpoint registered - ${endpoint.method.toUpperCase()} ${basePath+endpoint.path}`)
+			list.push(endpoint);
 		});
 	} catch (e) {
 		throw Error(e);
