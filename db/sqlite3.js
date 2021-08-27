@@ -11,13 +11,13 @@ module.exports = {
 				/* Replace with logger later */
 				console.log('Connecting to SQLite3 Database.');
 				db = await new sqlite3.Database(':memory:');
-				console.log('Connection Successful.')
+				console.log('Connection Successful.');
 				
 				/* Build Schemas  */
-				let schemas = fs.readdirSync('./db/schemas');
+				let schemas = await fs.readdirSync('./db/schemas');
 
 				for(let i= 0; i < schemas.length; i++) {
-					console.log(`Building Schema: ${schemas[i].split('.')[0].toUpperCase()}`)
+					console.log(`Building Schema: ${schemas[i].split('.')[0].toUpperCase()}`);
 					let _schema = require(`${process.cwd()}/db/schemas/${schemas[i]}`);
 					await db.run(_schema)
 				}
@@ -28,7 +28,6 @@ module.exports = {
 			}
 		})
 	},
-		
 
 	getConnection: () => {
 		return db
