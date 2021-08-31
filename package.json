@@ -27,7 +27,9 @@
     "generate-schema": "^2.6.0",
     "path": "^0.12.7",
     "sqlite3": "^4.0.6",
-    "swagger-ui-express": "^4.1.6"
+    "swagger-ui-express": "^4.1.6",
+    "winston": "^3.3.3",
+    "winston-daily-rotate-file": "^4.5.5"
   },
   "devDependencies": {
     "eslint": "6.8.0",

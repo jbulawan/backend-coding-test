@@ -1,11 +1,13 @@
-/* Routers Register */
 'use strict';
+
+/* Routers Register */
+
 const fs = require('fs');
 const swaggerUi = require('swagger-ui-express');
 
 /* Swagger Docs*/
 const Swagger = require(process.cwd()+'/swagger/swagger');
-
+const logger = require(process.cwd()+'/src/util/logger')
 const TAG = '[ROUTER]';
 
 module.exports = {
@@ -17,7 +19,6 @@ module.exports = {
 				fs.readdirSync(process.cwd()+'/src/routes/').forEach((module) => {
 					if (module.toUpperCase() !== 'ROUTER.JS'){
 						let route = `./${module}/${module.replace('.js', '')}`;
-						// console.log(route)
 						let router = require(route);
 						let newPath = formatBasePath(router.basePath);
 						paths[newPath] = registerRoute(app, router, module);
@@ -69,7 +70,7 @@ const registerRoute = (app, router, module) => {
 			endpoint.handler = '';
 			endpoint.tags = router.tags;
 			/* Replace with Winston Later */
-			console.log(`${TAG}[${module.toUpperCase()}] Endpoint registered - ${endpoint.method.toUpperCase()} ${basePath+endpoint.path}`)
+			logger.system(`${TAG}[${module.toUpperCase()}] Endpoint registered - ${endpoint.method.toUpperCase()} ${basePath+endpoint.path}`)
 			list.push(endpoint);
 		});
 	} catch (e) {
