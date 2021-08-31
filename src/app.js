@@ -9,7 +9,7 @@ const router = require('./routes/router');
 module.exports = () => {
     /* Express Configurations */
     app.use(bodyParser.json());
-acac
+
     /* Initialize routes */
     router.initialize(app);
 
